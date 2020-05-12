@@ -1,8 +1,14 @@
 class BdvNodeInput {
     constructor(questionList) {
         this._rl = null;
-        this.questions = questionList;
+        this.questions = questionList || ["y no question?"];
         this.answerList = [];
+    }
+
+    flush(questionList) {
+        this.questions = questionList || ["y no question?"];
+        this.answerList = [];
+        return this;
     }
 
     question(msg, index) {
@@ -26,8 +32,6 @@ class BdvNodeInput {
             this._rl = require("readline").createInterface({
                 input: process.stdin,
                 output: process.stdout
-            });
-            this._rl.on("close", () => {
             });
             resolve(this.question(this.questions[0], 0));
         })
